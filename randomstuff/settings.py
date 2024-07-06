@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,6 +31,30 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=180),
+    'ROTATE_REFRESH_TOKENS': False
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+]
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8080',
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,7 +62,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'randomstuffapp'
+    'randomstuffapp',
+    'corsheaders',
+    'djangorestframework',
+    'djangorestframework_simplejwt'
 ]
 
 MIDDLEWARE = [
@@ -48,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'randomstuff.urls'
@@ -69,7 +98,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'randomstuff.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

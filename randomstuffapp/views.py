@@ -2,12 +2,18 @@ from django.shortcuts import render, HttpResponse, redirect
 from .models import TodoItem
 from .forms import CreateUserForm, LoginForm
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.http import JsonResponse
 
 # Authentication models and functions
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
+@ensure_csrf_cookie
+def get_csrf_token(request):
+  return JsonResponse({'csrfToken': request.META.get('CSRF_COOKIE')})
+
 def home(request):
   return render(request, "home.html")
 
