@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+AUTH_USER_MODEL = 'randomstuffapp.User'
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
@@ -64,8 +65,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'randomstuffapp',
     'corsheaders',
-    'djangorestframework',
-    'djangorestframework_simplejwt'
+    'rest_framework',
+    'rest_framework_simplejwt'
 ]
 
 MIDDLEWARE = [
